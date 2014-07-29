@@ -1,3 +1,22 @@
 html {
-  background-color: #fff !important;
+  //background-color: #fff !important;
+}
+
+#subject {
+  //margin-top: 15px !important;
+}
+
+.hl-hint-row {
+  overflow: auto;
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+}
+
+.hl-hint-row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.col-half {
+  width: 50%;
+  float: left;
 }

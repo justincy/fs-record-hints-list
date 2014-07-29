@@ -1,0 +1,78 @@
+.fst-row {
+  overflow: hidden;
+  margin-bottom: -2px;
+}
+
+.fst-person {
+  width: 180px;
+  padding: 25px;
+  float: left;
+  position: relative;
+}
+
+.fst-name {
+  color: #333;
+  text-align: center;
+}
+
+.fst-role {
+  text-transform: uppercase;
+  font-size: 80%;
+  text-align: center;
+}
+
+.fst-line-bottom,
+.fst-line-top {
+  border-right: 2px solid #ccc;
+  position: absolute;
+  left: 50%;
+  height: 50px;
+}
+
+.fst-line-bottom {
+  bottom: -35px;
+}
+
+.fst-line-top {
+  top: -35px;
+}
+
+.fst-line-left,
+.fst-line-right {
+  position: absolute;
+  border-top: 2px solid #ccc;
+  top: 50%;
+  width: 30px;
+}
+
+.fst-line-left {
+  left: -15px;
+}
+
+.fst-line-right {
+  right: -15px;
+}
+
+.fst-line-top-full {
+  position: absolute;
+  border-top: 2px solid #ccc;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.fst-line-top-right,
+.fst-line-top-left {
+  position: absolute;
+  border-top: 2px solid #ccc;
+  top: 0px;
+  width: 50%;
+}
+
+.fst-line-top-right {
+  right: 0;
+}
+
+.fst-line-top-left {
+  left: 0;
+}

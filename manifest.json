@@ -6,20 +6,27 @@
   "content_scripts": [
     {
       "matches": [
-        "https://familysearch.org/_record_hints_list"
+        "https://familysearch.org/_record_hints_list*"
       ],
       "run_at": "document_start",
       "js": [
+        "includes/fs-traversal-relationship-display-0.2.0.js",
         "includes/familysearch-javascript-sdk.min.js",
-        "includes/fs-traversal-0.4.0.js",
+        "includes/fs-traversal-1.0.1.js",
         "includes/jquery-2.1.1.min.js",        
+        "includes/mustache.min.js",
         "includes/async-0.9.0.js",
         "includes/cookies.js",
         "js/index.js"
       ],
       "css": [
-        "css/index.css"
+        "css/index.css",
+        "css/fs-traversal-relationship-display-0.2.0.css"
       ]
     }
+  ],
+  "web_accessible_resources": [
+    "img/loader-big-333333-00000.gif",
+    "templates/hint-row.html"
   ]
 }
