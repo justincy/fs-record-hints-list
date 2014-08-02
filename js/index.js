@@ -12,39 +12,58 @@
     * Loading indication
     * "Show me more" button
     * Better styling of results
-    * Change HTML title of the page
  2. Figure out why API returns matches when tree doesn't show them
 
 **/
 
+document.title = 'Record Hints List | FamilySearch.org';
+
 var queue = async.queue(queueWorker, 5),
     step = max = 10,
     count = 0,
-    token,
     traversal,
-    list = $('<div id="hl-hints-list">'),
-    hintRowTemplate = '';
-    
-document.title = 'Record Hints List | FamilySearch.org';
+    list,
+    rowTemplate,
+    docReady = $.Deferred();
 
-$.get(chrome.extension.getURL('templates/hint-row.html')).done(function(html){
-  hintRowTemplate = html;
-  Mustache.parse(hintRowTemplate);
+// Resolve a deferred when the document is ready
+$(document).ready(function(){
+  docReady.resolve();
 });
 
-$(document).ready(function(){
+// Wait for templates and DOM to load, then setup
+// the DOM nodes we need for the app and angular    
+$.when(
+  $.get(chrome.extension.getURL('templates/page.html')), 
+  $.get(chrome.extension.getURL('templates/hint-row.html')),
+  docReady
+).done(function(pageResponse, rowResponse){
 
-  $('.app-home').html(list).append('<img src="'+chrome.extension.getURL('img/loader-big-333333-00000.gif')+'">');
+  $('.app-home')
+    .html(pageResponse[0]);
+    
+  $('#hl-app').append('<img id="hl-loader" src="'+chrome.extension.getURL('img/loader-big-333333-00000.gif')+'">');
+  
+  rowTemplate = rowResponse[0];
+  Mustache.parse(rowTemplate);
+  
+  list = $('#hl-hints-list');
+  
+  //setupAngular();
+  
+  setupTraversal();
+  
+});
 
-  // Get session
-  token = cookiesUtil.getItem('fssessionid');
+
+function setupTraversal(){
   
   // Get start ID
   var start = location.pathname.substring(1).split('/')[1];
   
   // Setup SDK
   FamilySearch.init({
-    access_token: token,
+    access_token: cookiesUtil.getItem('fssessionid'),
     environment: 'production',
     http_function: $.ajax,
     deferred_function: $.Deferred,
@@ -58,9 +77,14 @@ $(document).ready(function(){
       if(!person.living){
         queue.push(person);
       }
-    })
-    .traverse(start);
-});
+    });
+    
+  if(start){
+    traversal.traverse(start);
+  } else {
+    traversal.traverse();
+  }
+};
 
 /**
  * Request list of record hints for a person
@@ -71,8 +95,7 @@ function queueWorker(person, callback){
   }
   $.getJSON('https://familysearch.org/tree-data/record-matches/' + person.id).done(function(response){
     if(response && response.status === 'OK' && response.data.matches.length > 0){
-      //list.append('<p><a href="https://familysearch.org/tree/#view=allMatchingRecords&person='+person.id+'">'+person.display.name+'</a></p>')
-      var row = Mustache.render(hintRowTemplate, {
+      var row = Mustache.render(rowTemplate, {
         id: person.id,
         name: person.display.name,
         relationship: traversal.relationshipTo(person.id),

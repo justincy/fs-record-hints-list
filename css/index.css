@@ -1,11 +1,3 @@
-html {
-  //background-color: #fff !important;
-}
-
-#subject {
-  //margin-top: 15px !important;
-}
-
 .hl-hint-row {
   overflow: auto;
   border-bottom: 1px solid #ccc;
@@ -19,4 +11,8 @@ html {
 .col-half {
   width: 50%;
   float: left;
+}
+.hl-name,
+.hl-relationship {
+  cursor: pointer;
 }

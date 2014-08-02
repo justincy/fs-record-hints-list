@@ -1,7 +1,7 @@
 <div class="hl-hint-row">
   <div class="col-half">
     <div class="hl-name">
-      <a>{{name}}</a>
+      <a data-ng-click="showPersonCard('{{id}}', $event)">{{name}}</a>
     </div>
     <div class="hl-relationship">
       <a>{{relationship}}</a>
@@ -9,7 +9,7 @@
   </div>
   <div class="col-half">
     <p>
-      <a href="https://familysearch.org/tree/#view=allMatchingRecords&person={{id}}" target="_blank">{{count}} record hints</a>
+      <a href="https://familysearch.org/tree/#view=allMatchingRecords&person={{id}}" target="_blank" class="ng-scope ng-binding">{{count}} record hints</a>
     </p>
   </div>
 </div>
